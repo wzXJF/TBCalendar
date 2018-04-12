@@ -1,0 +1,6 @@
+framework module Pods_JFCalendarSwift {
+  umbrella header "Pods-JFCalendarSwift-umbrella.h"
+
+  export *
+  module * { export * }
+}
