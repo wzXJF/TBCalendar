@@ -139,7 +139,7 @@ class TBCalendar: UIView, UICollectionViewDelegate, UICollectionViewDataSource{
         
         self.callBackHeight(height: CGFloat(collectionViewHeight) + (self.style?.headerViewHeihgt)! + 10)
     }
-// collectCell-dataSource
+    // collectCell-dataSource
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         
         let marginDays = self.firstDayInFirstWeekThisMonth(date: (self.style?.today)!)
@@ -159,12 +159,41 @@ class TBCalendar: UIView, UICollectionViewDelegate, UICollectionViewDataSource{
         
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    @objc func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        let marginDays: NSInteger = self.firstDayInFirstWeekThisMonth(date: (self.style?.today)!);
+        let daysThisMonth: NSInteger = self.totalDaysThisMonth(date: (self.style?.today)!);
+        if(indexPath.row >= marginDays && (indexPath.row <= (marginDays + daysThisMonth - 1))){
+            
+            let day: NSInteger = indexPath.row - marginDays + 1
+            let date: Date = self.dateByday(day: day, date: (self.style?.today)!)
+            let cell: TBCalendarDateCell = collectionView.cellForItem(at: indexPath) as! TBCalendarDateCell
+            if(self.style!.isSupportMoreSelect!){
+                self.didSelectDate(date: date as NSDate)
+                cell.updateCellSelectCellColor()
+            }
+            else
+            {
+                if(self.currentSelctCell == cell)
+                {
+                    return;
+                }
+                
+                self.currentSelctCell?.isSelected = false
+                self.currentSelctCell?.updateCellSelectCellColor()
+                cell.isSelected = true
+                self.currentSelctCell = cell
+                self.didSelectDate(date: date as NSDate)
+                cell.updateCellSelectCellColor(animation:true)
+            }
+        }
+        else
+        {
+            //            self.collectionView(collectionView, didDeselectItemAt: indexPath)
+        }
     }
     
-// DataSource
-    
+    // DataSource
     func titleForDate(date: NSDate) -> String {
         
         if (self.dataSource != nil) && (self.dataSource?.responds(to: #selector(TBCalendarDataSource.calendar(calendar:titleForDate:))))! {
@@ -184,10 +213,12 @@ class TBCalendar: UIView, UICollectionViewDelegate, UICollectionViewDataSource{
     }
     
     func callBackHeight(height: CGFloat) -> Void {
-        
+        if (self.dataSource != nil) && (self.dataSource?.responds(to: #selector(TBCalendarDataSource.calender(calender:layoutCallBackHeight:))))! {
+            return (self.dataSource?.calender(calender: self, layoutCallBackHeight: height))!
+        }
     }
     
-// delegate
+    // delegate
     func shouldSelectDate(date: NSDate) -> Bool {
         
         if (self.delegate != nil) && (self.delegate?.responds(to: #selector(TBCalendarDataDelegate.calender(calender:shouldSelectDate:))))! {
@@ -200,7 +231,7 @@ class TBCalendar: UIView, UICollectionViewDelegate, UICollectionViewDataSource{
     func didSelectDate(date: NSDate) {
         
         if (self.delegate != nil) && (self.delegate?.responds(to: #selector(TBCalendarDataDelegate.calender(calender:didSelectDate:))))! {
-        self.delegate?.calender!(calender: self, didSelectDate: date)
+            self.delegate?.calender!(calender: self, didSelectDate: date)
         }
     }
     
@@ -210,7 +241,7 @@ class TBCalendar: UIView, UICollectionViewDelegate, UICollectionViewDataSource{
         self.collectionView.reloadData()
     }
     
-// private
+    // private
     func totalDaysThisMonth(date: NSDate) -> Int {
         let range = NSCalendar.current.range(of: .day, in: .month, for: date as Date)
         
@@ -240,11 +271,11 @@ class TBCalendar: UIView, UICollectionViewDelegate, UICollectionViewDataSource{
         let formatter = DateFormatter.init()
         formatter.dateFormat = "YYYY-MM-dd"
         let string: String = "\(newComp.year)" + "-" + "\(newComp.month)" + "-" + "\(newComp.day)"
-
+        
         return formatter.date(from: string)!
     }
     
-// UICollectionViewDataSource
+    // UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         let marginDays = self.firstDayInFirstWeekThisMonth(date: (self.style?.today)!)
@@ -266,7 +297,7 @@ class TBCalendar: UIView, UICollectionViewDelegate, UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
+        
         let cell: TBCalendarDateCell = collectionView.dequeueReusableCell(withReuseIdentifier: TBCalendar.TBCalendarDateCellID, for: indexPath) as! TBCalendarDateCell
         cell.isSelected = false
         cell.updateCellSelectCellColor()
@@ -347,7 +378,7 @@ class TBCalendar: UIView, UICollectionViewDelegate, UICollectionViewDataSource{
         return true
     }
     
-// lazy
+    // lazy
     func getHeaderView() -> TBCalendarHeaderView {
         let headerView = TBCalendarHeaderView.init(type: .centerDate, style: self.style!, frame: CGRect.init())
         return headerView

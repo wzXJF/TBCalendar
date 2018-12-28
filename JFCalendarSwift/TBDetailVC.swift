@@ -9,7 +9,7 @@
 import UIKit
 
 class TBDetailVC: UIViewController , TBCalendarDataDelegate , TBCalendarDataSource{
-
+    
     lazy var calender: TBCalendar = self.getCalendar()
     lazy var style: TBCalendarAppearStyle = self.getStyle()
     
@@ -24,7 +24,7 @@ class TBDetailVC: UIViewController , TBCalendarDataDelegate , TBCalendarDataSour
         self.calender.frame = CGRect.init(x: 0, y: CGFloat(NAV_HEIGHT), width: self.view.width, height: 100)
         self.view.addSubview(self.calender)
     }
-
+    
     func getCalendar() -> TBCalendar {
         let calendar = TBCalendar.init(style: self.style, frame: CGRect.init(x: 0, y: 0, width: 200, height: 200))
         calendar.dataSource = self;
@@ -98,7 +98,11 @@ class TBDetailVC: UIViewController , TBCalendarDataDelegate , TBCalendarDataSour
     // delegate And dateg
     func calender(calender: TBCalendar, layoutCallBackHeight: CGFloat) {
         
-        self.calender.frame = CGRect.init(x: 0, y: 0, width: self.view.width, height: layoutCallBackHeight)
+        self.calender.frame = CGRect.init(x: 0, y: 64, width: self.view.width, height: layoutCallBackHeight)
     }
     
+    func calender(calender: TBCalendar, didSelectDate: NSDate) {
+        //这个地方可以做相应的点击某一天的数据处理
+        print(didSelectDate)
+    }
 }

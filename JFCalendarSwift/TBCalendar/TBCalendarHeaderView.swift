@@ -9,7 +9,7 @@
 import UIKit
 
 class TBCalendarHeaderView: UIView {
-
+    
     typealias click = (NSDate) -> Void
     public var previousMonth: ((_ date: NSDate) -> Void)?
     public var nextMonth: ((_ date: NSDate) -> Void)?
@@ -83,19 +83,19 @@ class TBCalendarHeaderView: UIView {
             switch (self.headType)
             {
             case .leftDate:
-            
+                
                 self.dateLable.frame = CGRect.init(x: 0, y: 0, width: selfWidth, height: self.topView.frame.size.height);
-            self.dateLable.textAlignment = .left;
-            
-            break;
+                self.dateLable.textAlignment = .left;
+                
+                break;
             case .centerDate:
-            
-            let image = UIImage.init(named: "icon_switch")
-            self.dateLable.frame = CGRect.init(x: selfWidth * 0.5 - 32, y: 0, width: 64, height: self.topView.frame.size.height);
-            
-            self.previousButton.frame = CGRect.init(x: selfWidth * 0.5 - 30 - (image?.size.width)! - 35, y: (self.dateLable.frame.size.height - (image?.size.height)! - 20)*0.5 - 7, width: (image?.size.width)! + 20, height: (image?.size.height)! + 20);
-            self.nextButton.frame = CGRect.init(x: selfWidth * 0.5 + 10 + 34, y: (self.dateLable.size.height - (image?.size.height)! - 20)*0.5 - 7, width: (image?.size.width)! + 20, height: (image?.size.height)! + 20);
-            break;
+                
+                let image = UIImage.init(named: "icon_switch")
+                self.dateLable.frame = CGRect.init(x: selfWidth * 0.5 - 32, y: 0, width: 64, height: self.topView.frame.size.height);
+                
+                self.previousButton.frame = CGRect.init(x: selfWidth * 0.5 - 30 - (image?.size.width)! - 35, y: (self.dateLable.frame.size.height - (image?.size.height)! - 20)*0.5 - 7, width: (image?.size.width)! + 20, height: (image?.size.height)! + 20);
+                self.nextButton.frame = CGRect.init(x: selfWidth * 0.5 + 10 + 34, y: (self.dateLable.size.height - (image?.size.height)! - 20)*0.5 - 7, width: (image?.size.width)! + 20, height: (image?.size.height)! + 20);
+                break;
             }
             
             let weekdayWidth = self.bottomView.bounds.size.width / CGFloat(self.style.weekDateDays.count)
@@ -103,7 +103,7 @@ class TBCalendarHeaderView: UIView {
             
             
             for (index, value) in self.weekdayLabels.enumerated() {
-            
+                
                 value.frame = CGRect.init(x: CGFloat(index) * weekdayWidth, y: 0, width: weekdayWidth, height: weekdayHeight)
             }
         }
@@ -125,7 +125,7 @@ class TBCalendarHeaderView: UIView {
         for (index, value) in self.weekdayLabels.enumerated() {
             
             if index < self.style.weekDateDays.count {
-            value.text = self.style.weekDateDays[index];
+                value.text = self.style.weekDateDays[index];
             }
         }
     }
@@ -174,7 +174,7 @@ class TBCalendarHeaderView: UIView {
         }
     }
     
-
+    
     func setMonthDate(date: NSDate){
         
         //如果点击的日期超过当前日期 不让其点击 || [TBUtils compareOneDay:monthDate withAnotherDay:[NSDate dateWithString:@"2017-03" format:@"yyyy-MM"]] == -1
@@ -222,7 +222,7 @@ class TBCalendarHeaderView: UIView {
             self.previousButton.isEnabled = true;
         }
     }
-
+    
     func nextMonth(date: NSDate) -> NSDate{
         
         let dateComponents = NSDateComponents.init()

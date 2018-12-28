@@ -9,7 +9,7 @@
 import UIKit
 
 class TBCalendarAppearStyle: NSObject {
-// head-data
+    // head-data
     /**
      *  设置item的高度，isNeedCustomHeihgt是YES，可以设置itemHeight
      */
@@ -27,7 +27,7 @@ class TBCalendarAppearStyle: NSObject {
      */
     var weekDateDays = [String]()
     
-//头部style设置
+    //头部style设置
     /**
      *  设置头部View的选择月份View的高度
      */
@@ -60,8 +60,8 @@ class TBCalendarAppearStyle: NSObject {
      *  设置头部View的星期几View的字体颜色
      */
     var headerViewWeekColor: UIColor?
-
-// 日期sytle设置
+    
+    // 日期sytle设置
     /**
      *  设置日期item的的高度，宽度根据屏幕宽度自动适应  isNeedCustomHeihgt = YES 有效
      */

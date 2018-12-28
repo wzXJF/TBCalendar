@@ -65,7 +65,7 @@ class TBCalendarDateCell: UICollectionViewCell {
         self.descLabel.font = style.dateDescFont;
         self.descLabel.textColor = self.isSelected ? style.dateDescSelectColor:style.dateDescUnselectColor;
     }
-// 暴露出来的方法，供外界使用
+    // 暴露出来的方法，供外界使用
     func reloadCellData(title: String) {
         self.dateLabel.text = title.count > 0 ? title : ""
     }
@@ -127,7 +127,7 @@ class TBCalendarDateCell: UICollectionViewCell {
         updateCellSelectBackgroundColor()
     }
     
-// lazy 相关函数
+    // lazy 相关函数
     func getDateLabel() -> UILabel {
         let dateLabel = UILabel.init()
         dateLabel.layer.cornerRadius = 17
